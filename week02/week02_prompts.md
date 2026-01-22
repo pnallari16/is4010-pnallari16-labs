@@ -27,7 +27,7 @@ def sum_of_evens(numbers):
 > Provide the corrected code in a Python code block
 
 **AI's Corrected Code:**
-[```python
+```python
 def sum_of_evens(numbers):
     """Calculate the sum of all even numbers in a list.
 
@@ -46,7 +46,8 @@ def sum_of_evens(numbers):
         # Change the condition to check if the remainder is 0
         if num % 2 == 0:
             total += num
-    return total]
+    return total
+```
 
 ---
 
@@ -77,7 +78,7 @@ def sum_of_evens(numbers):
 >Provide the corrected code in a Python code block
 
 **AI's Corrected Code:**
-[```python
+```python
 def get_names_of_adults(users):
     """Given a list of user dictionaries, returns a list of names of users 
     who are 18 or older.
@@ -93,7 +94,8 @@ def get_names_of_adults(users):
         Names of users who are 18 or older.
     """
     # Use a list comprehension for a concise, readable, and efficient solution
-    return [user['name'] for user in users if user['age'] >= 18]]
+    return [user['name'] for user in users if user['age'] >= 18]
+```
 
 ---
 
@@ -108,7 +110,7 @@ def get_names_of_adults(users):
 > Using the code given, write a professional NumPy-style docstring for this function.
 
 **AI's Corrected Code:**
-[```python
+```python
 def get_names_of_adults(users):
     """Given a list of user dictionaries, returns a list of names of users 
     who are 18 or older.
@@ -124,6 +126,7 @@ def get_names_of_adults(users):
         Names of users who are 18 or older.
     """
     # Use a list comprehension for a concise, readable, and efficient solution
-    return [user['name'] for user in users if user['age'] >= 18]]
+    return [user['name'] for user in users if user['age'] >= 18]
+```
 
 ---
