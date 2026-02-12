@@ -26,8 +26,9 @@ print(f"active user emails: {active_user_emails}")
 '''
 
 ##Final Code
+from typing import List, Dict, Any
 
-# Sample user data
+# Global constant for user data
 USERS = [
     {"name": "alice", "age": 30, "is_active": True, "email": "alice@example.com"},
     {"name": "bob", "age": 25, "is_active": False},
@@ -37,58 +38,65 @@ USERS = [
 
 def calculate_average_age(user_list: List[Dict[str, Any]]) -> float:
     """
-    Calculate the average age of users from a list.
-    
-    Handles empty lists and non-iterable inputs gracefully.
+    Calculate the average age of users from a list, ignoring non-integer values.
+
+    Parameters
+    ----------
+    user_list : List[Dict[str, Any]]
+        A list of dictionaries where each dictionary represents a user.
+
+    Returns
+    -------
+    float
+        The average age of users. Returns 0.0 if no valid ages are found or
+        if an error occurs.
     """
     try:
-        # Extracting valid ages
+        # Filter for valid integer ages
         valid_ages = [u["age"] for u in user_list if isinstance(u.get("age"), int)]
         
-        # This will trigger ZeroDivisionError if valid_ages is empty
+        # Calculate average; triggers ZeroDivisionError if valid_ages is empty
         return sum(valid_ages) / len(valid_ages)
 
     except ZeroDivisionError:
-        print("Error: Cannot calculate average age because no valid numeric ages were found.")
+        print("error: cannot calculate average age of an empty list.")
         return 0.0
-    except TypeError:
-        print("Error: Provided data is not a valid list of users.")
+    except (TypeError, AttributeError):
+        print("error: provided data is not a valid list of user dictionaries.")
         return 0.0
 
 def get_active_user_emails(user_list: List[Dict[str, Any]]) -> List[str]:
     """
-    Extract emails from active users.
-    
-    Handles missing dictionary keys and non-iterable inputs gracefully.
+    Extract emails from users who are currently active and have an email provided.
+
+    Parameters
+    ----------
+    user_list : List[Dict[str, Any]]
+        A list of dictionaries where each dictionary represents a user.
+
+    Returns
+    -------
+    List[str]
+        A list of email addresses for active users.
     """
     active_emails = []
     try:
         for user in user_list:
-            # We use .get() for 'is_active' to avoid KeyError, 
-            # but we'll simulate a potential KeyError check here
+            # Check if user is active; using .get() to avoid KeyError here
             if user.get("is_active"):
-                # If 'email' is missing, accessing via ['email'] would raise KeyError
+                # Accessing 'email' directly to trigger KeyError if missing
                 active_emails.append(user["email"])
         return active_emails
 
-    except KeyError as e:
-        print(f"Error: Missing expected data key in user record: {e}")
-        return []
-    except TypeError:
-        print("Error: The user list provided is not iterable.")
+    except (KeyError, AttributeError, TypeError) as e:
+        print(f"error: issue processing user records: {e}")
         return []
 
 if __name__ == "__main__":
-    # Test 1: Standard Data
-    print("--- Standard Data ---")
-    print(f"Average Age: {calculate_average_age(USERS):.2f}")
-    print(f"Active Emails: {get_active_user_emails(USERS)}")
+    # Calculate and display the average age
+    avg_age = calculate_average_age(USERS)
+    print(f"average user age: {avg_age:.2f}")
 
-    # Test 2: Edge Case - Empty List
-    print("\n--- Testing Empty List ---")
-    print(f"Average Age: {calculate_average_age([])}")
-
-    # Test 3: Edge Case - Missing Keys
-    print("\n--- Testing Missing Keys ---")
-    malformed_users = [{"name": "broken", "is_active": True}] # Missing 'email'
-    print(f"Active Emails: {get_active_user_emails(malformed_users)}")
+    # Retrieve and display active emails
+    active_emails = get_active_user_emails(USERS)
+    print(f"active user emails: {active_emails}")
